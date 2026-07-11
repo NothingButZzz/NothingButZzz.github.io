@@ -3,9 +3,6 @@ import FadeIn from "./FadeIn";
 export default function Contact() {
   return (
     <section id="contact" className="relative mx-auto max-w-6xl px-6 pb-16 pt-32">
-      {/* 背景光暈 */}
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-[420px] bg-[radial-gradient(ellipse_60%_50%_at_50%_100%,rgba(34,211,238,0.08),transparent)]" />
-
       <div className="relative text-center">
         <FadeIn>
           <p className="font-mono text-sm text-accent">03. Contact</p>

@@ -71,7 +71,7 @@ export default function Projects() {
           <FadeIn key={project.title} delay={0.12 * i}>
             <a
               href={project.link}
-              className="glass glow-border group flex h-full flex-col rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-2"
+              className="glass glow-border group flex h-full flex-col rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1"
             >
               <div className="flex items-start justify-between">
                 <FolderIcon />

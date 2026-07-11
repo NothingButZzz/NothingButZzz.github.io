@@ -50,9 +50,8 @@ export default function About() {
               {SKILLS.map((skill) => (
                 <span
                   key={skill}
-                  className="glass glow-border flex items-center gap-2 rounded-full px-4 py-2 text-sm text-foreground/80"
+                  className="glass glow-border rounded-full px-4 py-2 text-sm text-foreground/80"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                   {skill}
                 </span>
               ))}

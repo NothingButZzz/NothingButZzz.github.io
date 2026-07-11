@@ -38,8 +38,11 @@ body {
   background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(var(--accent), var(--accent-2));
+  background: rgba(148, 163, 184, 0.3);
   border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
 }
 
 .text-gradient {
@@ -56,49 +59,31 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* 滑過時顯示的漸層描邊 */
+/* 滑過時邊框輕微亮起 */
 .glow-border {
-  position: relative;
+  transition: border-color 0.3s ease;
 }
-.glow-border::before {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  border-radius: inherit;
-  padding: 1px;
-  background: linear-gradient(120deg, var(--accent), var(--accent-2));
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.glow-border:hover::before {
-  opacity: 1;
+.glow-border:hover {
+  border-color: rgba(34, 211, 238, 0.35);
 }
 
 /* 科技感網格背景 */
 .bg-grid {
   background-image:
-    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
-  background-size: 56px 56px;
+    linear-gradient(rgba(148, 163, 184, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.035) 1px, transparent 1px);
+  background-size: 64px 64px;
   mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
   -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
 }
 
-/* 主按鈕光暈 */
+/* 主按鈕：淡淡的光暈就好 */
 .btn-glow {
-  box-shadow:
-    0 0 18px rgba(34, 211, 238, 0.45),
-    0 0 48px rgba(34, 211, 238, 0.18);
+  box-shadow: 0 0 20px rgba(34, 211, 238, 0.2);
   transition: box-shadow 0.3s ease, transform 0.3s ease;
 }
 .btn-glow:hover {
-  box-shadow:
-    0 0 26px rgba(34, 211, 238, 0.65),
-    0 0 72px rgba(34, 211, 238, 0.28);
+  box-shadow: 0 0 28px rgba(34, 211, 238, 0.35);
   transform: translateY(-2px);
 }
 
