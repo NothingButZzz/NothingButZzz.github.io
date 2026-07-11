@@ -9,24 +9,25 @@ export default function RotatingText({ words }: { words: string[] }) {
   useEffect(() => {
     const id = setInterval(() => {
       setIndex((i) => (i + 1) % words.length);
-    }, 2400);
+    }, 2600);
     return () => clearInterval(id);
   }, [words.length]);
 
   return (
-    <span className="relative inline-block h-[1.4em] min-w-[14ch] align-bottom overflow-hidden">
+    <span className="inline-flex items-center gap-1.5 font-mono">
       <AnimatePresence mode="wait">
         <motion.span
           key={words[index]}
-          initial={{ y: 24, opacity: 0 }}
+          initial={{ y: 14, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
-          exit={{ y: -24, opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="text-gradient absolute left-0 top-0 font-mono"
+          exit={{ y: -14, opacity: 0 }}
+          transition={{ duration: 0.35, ease: "easeOut" }}
+          className="text-gradient"
         >
           {words[index]}
         </motion.span>
       </AnimatePresence>
+      <span className="h-[1.15em] w-[2px] animate-pulse rounded-full bg-accent" aria-hidden />
     </span>
   );
 }

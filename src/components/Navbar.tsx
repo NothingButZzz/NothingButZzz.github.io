@@ -11,11 +11,28 @@ const LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
+        }
+      },
+      { rootMargin: "-40% 0px -55% 0px" }
+    );
+    for (const link of LINKS) {
+      const el = document.querySelector(link.href);
+      if (el) observer.observe(el);
+    }
+    return () => observer.disconnect();
   }, []);
 
   return (
@@ -34,7 +51,9 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="group font-mono text-sm text-foreground/70 transition-colors hover:text-accent"
+                className={`group font-mono text-sm transition-colors hover:text-accent ${
+                  active === link.href ? "text-accent" : "text-foreground/70"
+                }`}
               >
                 <span className="text-accent/70">{link.index}.</span>{" "}
                 <span className="underline-offset-4 group-hover:underline">{link.label}</span>

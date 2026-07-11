@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero3D from "@/components/Hero3D";
 import RotatingText from "@/components/RotatingText";
+import FadeIn from "@/components/FadeIn";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Contact from "@/components/Contact";
@@ -20,31 +21,40 @@ export default function Home() {
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-background" />
 
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
-            <span className="block text-foreground/85">Hi, 我是</span>
-            <span className="text-gradient mt-2 block">Kenny Lin</span>
-          </h1>
+          <FadeIn>
+            <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
+              <span className="block text-foreground/85">Hi, 我是</span>
+              <span className="text-gradient mt-2 block pb-2">Kenny Lin</span>
+            </h1>
+          </FadeIn>
 
-          <p className="mt-6 text-lg text-foreground/60 sm:text-xl">
-            <RotatingText
-              words={["Frontend Developer", "機電整合工程師", "Creative Coder", "3D Enthusiast"]}
-            />
-          </p>
+          <FadeIn delay={0.15}>
+            <p className="mt-4 text-lg text-foreground/60 sm:text-xl">
+              <RotatingText
+                words={["Frontend Developer", "機電整合工程師", "Creative Coder", "3D Enthusiast"]}
+              />
+            </p>
+          </FadeIn>
 
-          <div className="mt-10 flex justify-center gap-4">
-            <a
-              href="#projects"
-              className="btn-glow rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-background"
-            >
-              查看作品
-            </a>
-            <a
-              href="#contact"
-              className="glass glow-border rounded-full px-7 py-3.5 text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5"
-            >
-              聯絡我
-            </a>
-          </div>
+          <FadeIn delay={0.3}>
+            <div className="mt-10 flex justify-center gap-4">
+              <a
+                href="#projects"
+                className="btn-glow group rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-background"
+              >
+                查看作品
+                <span className="ml-1.5 inline-block transition-transform duration-300 group-hover:translate-y-0.5">
+                  ↓
+                </span>
+              </a>
+              <a
+                href="#contact"
+                className="glass glow-border rounded-full px-7 py-3.5 text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5"
+              >
+                聯絡我
+              </a>
+            </div>
+          </FadeIn>
         </div>
 
         <a
