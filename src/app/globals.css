@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #05060a;
+  --background: #050609;
   --foreground: #e6f1ff;
   --accent: #22d3ee;
   --accent-2: #a855f7;
@@ -16,9 +16,14 @@
   --font-mono: var(--font-geist-mono);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
+  overflow-x: hidden;
 }
 
 ::selection {
@@ -27,7 +32,7 @@ body {
 }
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--background);
@@ -38,19 +43,20 @@ body {
 }
 
 .text-gradient {
-  background-image: linear-gradient(90deg, var(--accent), var(--accent-2));
+  background-image: linear-gradient(100deg, #67e8f9 0%, var(--accent) 35%, var(--accent-2) 100%);
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
 }
 
 .glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* 滑過時顯示的漸層描邊 */
 .glow-border {
   position: relative;
 }
@@ -66,7 +72,56 @@ body {
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.3s ease;
+  pointer-events: none;
 }
 .glow-border:hover::before {
   opacity: 1;
+}
+
+/* 科技感網格背景 */
+.bg-grid {
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 30%, transparent 75%);
+}
+
+/* 主按鈕光暈 */
+.btn-glow {
+  box-shadow:
+    0 0 18px rgba(34, 211, 238, 0.45),
+    0 0 48px rgba(34, 211, 238, 0.18);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+.btn-glow:hover {
+  box-shadow:
+    0 0 26px rgba(34, 211, 238, 0.65),
+    0 0 72px rgba(34, 211, 238, 0.28);
+  transform: translateY(-2px);
+}
+
+/* 滾動提示滑鼠圖示 */
+@keyframes scroll-dot {
+  0% { transform: translateY(0); opacity: 1; }
+  70% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 0; }
+}
+.scroll-mouse {
+  width: 24px;
+  height: 38px;
+  border: 2px solid rgba(230, 241, 255, 0.3);
+  border-radius: 999px;
+  display: flex;
+  justify-content: center;
+  padding-top: 6px;
+}
+.scroll-mouse::after {
+  content: "";
+  width: 3px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--accent);
+  animation: scroll-dot 1.8s ease-in-out infinite;
 }
