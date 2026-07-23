@@ -1,22 +1,27 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import MouseSpotlight from "@/components/MouseSpotlight";
+import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import ScrollProgress from "@/components/ScrollProgress";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const display = Space_Grotesk({
+  variable: "--font-display",
   subsets: ["latin"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const sans = Inter({
+  variable: "--font-sans",
+  subsets: ["latin"],
+});
+
+const mono = JetBrains_Mono({
+  variable: "--font-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Kenny Lin | Portfolio",
-  description: "Kenny Lin's personal portfolio — frontend development, 3D web experiences, and mechatronics projects.",
+  title: "Kenny Lin — Mechatronics & Web Developer",
+  description:
+    "Kenny Lin's personal portfolio — mechatronics, embedded systems, and web development.",
 };
 
 export default function RootLayout({
@@ -27,12 +32,10 @@ export default function RootLayout({
   return (
     <html
       lang="zh-TW"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <ScrollProgress />
-        <MouseSpotlight />
-        <div className="grain pointer-events-none fixed inset-0 z-40" aria-hidden />
         {children}
       </body>
     </html>

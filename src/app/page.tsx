@@ -1,9 +1,9 @@
 import Navbar from "@/components/Navbar";
-import Hero3D from "@/components/Hero3D";
 import RotatingText from "@/components/RotatingText";
 import FadeIn from "@/components/FadeIn";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
+import Skills from "@/components/Skills";
 import Contact from "@/components/Contact";
 
 export default function Home() {
@@ -11,64 +11,66 @@ export default function Home() {
     <>
       <Navbar />
 
-      <section className="relative flex h-screen min-h-[680px] w-full items-center justify-center overflow-hidden">
-        {/* 3D 場景 */}
-        <Hero3D />
+      <main className="mx-auto w-full max-w-5xl px-6">
+        {/* HERO */}
+        <section className="relative flex min-h-screen flex-col justify-center py-32">
+          <div className="bg-dots pointer-events-none absolute inset-0 -z-10" />
 
-        {/* 網格 + 光暈 + 底部漸層 */}
-        <div className="bg-grid pointer-events-none absolute inset-0" />
-        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[420px] w-[640px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/5 blur-[140px]" />
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-background" />
-
-        <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
           <FadeIn>
-            <h1 className="text-5xl font-bold tracking-tight sm:text-7xl">
-              <span className="block text-foreground/85">Hi, 我是</span>
-              <span className="text-gradient mt-2 block pb-2">Kenny Lin</span>
+            <p className="eyebrow">機電整合 · 網頁開發 / MECHATRONICS · WEB DEV</p>
+          </FadeIn>
+
+          <FadeIn delay={0.08}>
+            <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.95] tracking-tight sm:text-8xl lg:text-9xl">
+              Kenny
+              <br />
+              <span className="text-accent">Lin</span>
             </h1>
           </FadeIn>
 
-          <FadeIn delay={0.15}>
-            <p className="mt-4 text-lg text-foreground/60 sm:text-xl">
-              <RotatingText
-                words={["Frontend Developer", "機電整合工程師", "Creative Coder", "3D Enthusiast"]}
-              />
+          <FadeIn delay={0.16}>
+            <p className="mt-8 max-w-xl leading-relaxed text-muted">
+              喜歡把工程邏輯和軟體結合，從機電整合、嵌入式到網頁開發，
+              做出實際會動、有質感的系統。
             </p>
           </FadeIn>
 
-          <FadeIn delay={0.3}>
-            <div className="mt-10 flex justify-center gap-4">
+          <FadeIn delay={0.24}>
+            <div className="mt-8 flex items-center gap-2 text-sm">
+              <span className="mono text-muted">{">"}</span>
+              <RotatingText
+                words={["mechatronics_engineer", "web_developer", "embedded_systems", "creative_coder"]}
+              />
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={0.32}>
+            <div className="mt-12 flex flex-wrap gap-4">
               <a
                 href="#projects"
-                className="btn-glow group rounded-full bg-accent px-7 py-3.5 text-sm font-semibold text-background"
+                className="mono rounded-md bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-background transition-opacity hover:opacity-85"
               >
                 查看作品
-                <span className="ml-1.5 inline-block transition-transform duration-300 group-hover:translate-y-0.5">
-                  ↓
-                </span>
               </a>
               <a
                 href="#contact"
-                className="glass glow-border rounded-full px-7 py-3.5 text-sm font-semibold text-foreground transition-transform hover:-translate-y-0.5"
+                className="mono rounded-md border border-line px-6 py-3 text-xs font-semibold uppercase tracking-widest text-foreground transition-colors hover:border-accent hover:text-accent"
               >
                 聯絡我
               </a>
             </div>
           </FadeIn>
-        </div>
 
-        <a
-          href="#about"
-          aria-label="Scroll to About"
-          className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
-        >
-          <div className="scroll-mouse" />
-        </a>
-      </section>
+          <div className="scroll-hint mono absolute bottom-8 left-6 text-[0.65rem] tracking-widest text-muted">
+            SCROLL ↓
+          </div>
+        </section>
 
-      <About />
-      <Projects />
-      <Contact />
+        <About />
+        <Projects />
+        <Skills />
+        <Contact />
+      </main>
     </>
   );
 }

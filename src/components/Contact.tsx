@@ -1,47 +1,61 @@
 import FadeIn from "./FadeIn";
+import SectionHeading from "./SectionHeading";
+import CopyEmail from "./CopyEmail";
+
+const EMAIL = "kenny.lin.026@gmail.com";
+
+const CHANNELS = [
+  { label: "EMAIL", value: EMAIL, href: `mailto:${EMAIL}` },
+  { label: "GITHUB", value: "NothingButZzz", href: "https://github.com/NothingButZzz" },
+];
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative mx-auto max-w-6xl px-6 pb-16 pt-32">
-      <div className="relative text-center">
-        <FadeIn>
-          <p className="font-mono text-sm text-accent">03. Contact</p>
-        </FadeIn>
-        <FadeIn delay={0.1}>
-          <h3 className="mx-auto mt-4 max-w-2xl text-4xl font-bold tracking-tight sm:text-5xl">
-            一起<span className="text-gradient">聊聊</span>吧
-          </h3>
-        </FadeIn>
-        <FadeIn delay={0.2} className="mx-auto mt-6 max-w-xl text-foreground/60">
-          <p>
-            如果對合作、專案或任何想法有興趣，隨時歡迎聯絡我，
-            我會盡快回覆。
-          </p>
-        </FadeIn>
+    <section id="contact" className="py-24">
+      <SectionHeading index="04" title="Contact" />
 
-        <FadeIn delay={0.3} className="mt-10 flex flex-wrap items-center justify-center gap-4">
-          <a
-            href="mailto:kenny.lin.026@gmail.com"
-            className="btn-glow rounded-full bg-accent px-8 py-3.5 text-sm font-semibold text-background"
-          >
-            寄封信給我
-          </a>
-          <a
-            href="https://github.com/NothingButZzz"
-            target="_blank"
-            rel="noreferrer"
-            className="glass glow-border rounded-full px-8 py-3.5 text-sm font-semibold text-foreground/90 transition-colors hover:text-accent"
-          >
-            GitHub
-          </a>
-        </FadeIn>
-      </div>
-
-      <div className="relative mt-24 border-t border-white/5 pt-8 text-center">
-        <p className="font-mono text-xs text-foreground/35">
-          © {new Date().getFullYear()} Kenny Lin — Built with Next.js, Three.js & Tailwind CSS
+      <FadeIn delay={0.1}>
+        <p className="mt-10 max-w-xl text-lg leading-relaxed text-foreground/90">
+          想聊機電整合、嵌入式系統，或合作專案嗎？
         </p>
-      </div>
+      </FadeIn>
+
+      <FadeIn delay={0.18}>
+        <div className="mt-6 flex flex-wrap items-center gap-4">
+          <a
+            href={`mailto:${EMAIL}`}
+            className="mono rounded-md bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-background transition-opacity hover:opacity-85"
+          >
+            Email me →
+          </a>
+          <CopyEmail email={EMAIL} />
+        </div>
+      </FadeIn>
+
+      <FadeIn delay={0.24}>
+        <dl className="mt-14 divide-y divide-line border-t border-line">
+          {CHANNELS.map((c) => (
+            <a
+              key={c.label}
+              href={c.href}
+              target={c.href.startsWith("http") ? "_blank" : undefined}
+              rel="noreferrer"
+              className="group flex items-center justify-between py-4"
+            >
+              <dt className="mono text-xs uppercase tracking-widest text-muted">{c.label}</dt>
+              <dd className="text-sm text-foreground/90 transition-colors group-hover:text-accent">
+                {c.value}
+              </dd>
+            </a>
+          ))}
+        </dl>
+      </FadeIn>
+
+      <footer className="mt-16 border-t border-line pt-8">
+        <p className="mono text-[0.7rem] text-muted">
+          © {new Date().getFullYear()} KENNY LIN — BUILT WITH NEXT.JS &amp; TAILWIND CSS
+        </p>
+      </footer>
     </section>
   );
 }

@@ -4,108 +4,76 @@ import SectionHeading from "./SectionHeading";
 type Project = {
   title: string;
   description: string;
-  tags: string[];
+  stack: string[];
   link?: string;
 };
 
 const PROJECTS: Project[] = [
   {
     title: "專案一：放你的作品名稱",
-    description: "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    tags: ["Next.js", "TypeScript"],
+    description:
+      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
+    stack: ["Next.js", "TypeScript"],
     link: "#",
   },
   {
     title: "專案二：放你的作品名稱",
-    description: "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    tags: ["Arduino", "C++"],
+    description:
+      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
+    stack: ["Arduino", "C++"],
     link: "#",
   },
   {
     title: "專案三：放你的作品名稱",
-    description: "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    tags: ["Python", "Data"],
+    description:
+      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
+    stack: ["Python", "Machine Learning"],
     link: "#",
   },
 ];
 
-function FolderIcon() {
-  return (
-    <svg
-      className="h-9 w-9 text-accent"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.5"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M4 20h16a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13c0 1.1.9 2 2 2Z" />
-    </svg>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg
-      className="h-5 w-5 text-foreground/40 transition-all duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-accent"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="M7 17 17 7M7 7h10v10" />
-    </svg>
-  );
-}
-
 export default function Projects() {
   return (
-    <section id="projects" className="mx-auto max-w-6xl px-6 py-32">
-      <SectionHeading index="02" label="Projects" title="作品集" />
+    <section id="projects" className="py-24">
+      <SectionHeading index="02" title="Projects" />
 
-      <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-4">
         {PROJECTS.map((project, i) => (
-          <FadeIn key={project.title} delay={0.12 * i}>
+          <FadeIn key={project.title} delay={0.06 * i}>
             <a
               href={project.link}
-              className="glass glow-border group flex h-full flex-col rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1"
+              className="group grid grid-cols-[auto_1fr_auto] items-start gap-5 border-b border-line py-8 transition-colors hover:bg-panel/60 sm:gap-8"
             >
-              <div className="flex items-start justify-between">
-                <FolderIcon />
-                <ArrowIcon />
+              <span className="mono pt-1 text-sm text-muted">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div>
+                <h3 className="font-display text-xl font-semibold transition-colors group-hover:text-accent sm:text-2xl">
+                  {project.title}
+                </h3>
+                <p className="mono mt-2 text-[0.7rem] uppercase tracking-widest text-muted">
+                  {project.stack.join(" · ")}
+                </p>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-muted">
+                  {project.description}
+                </p>
               </div>
-              <h4 className="mt-5 text-lg font-semibold text-foreground transition-colors group-hover:text-accent">
-                {project.title}
-              </h4>
-              <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/60">
-                {project.description}
-              </p>
-              <div className="mt-6 flex flex-wrap gap-x-4 gap-y-2">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="font-mono text-xs text-accent-2">
-                    {tag}
-                  </span>
-                ))}
-              </div>
+              <span className="pt-1 text-lg text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent">
+                ↗
+              </span>
             </a>
           </FadeIn>
         ))}
       </div>
 
-      <FadeIn delay={0.3} className="mt-14 text-center">
+      <FadeIn delay={0.2}>
         <a
           href="https://github.com/NothingButZzz"
           target="_blank"
           rel="noreferrer"
-          className="glass glow-border inline-flex items-center gap-2 rounded-full px-6 py-3 text-sm text-foreground/80 transition-colors hover:text-accent"
+          className="mono mt-8 inline-block text-xs uppercase tracking-widest text-muted transition-colors hover:text-accent"
         >
-          在 GitHub 看更多
-          <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
-            <path d="M5 12h14M13 6l6 6-6 6" />
-          </svg>
+          {"// MORE ON GITHUB →"}
         </a>
       </FadeIn>
     </section>
