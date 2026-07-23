@@ -38,6 +38,15 @@ body {
   overflow-x: hidden;
 }
 
+/* 桌機隱藏系統游標，改用自訂圈+點游標 */
+@media (min-width: 1024px) and (pointer: fine) {
+  body,
+  body a,
+  body button {
+    cursor: none;
+  }
+}
+
 :focus-visible {
   outline: 2px solid var(--accent);
   outline-offset: 3px;
