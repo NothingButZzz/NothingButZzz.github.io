@@ -1,12 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0d12;
-  --panel: #0e131a;
-  --foreground: #e9eef2;
-  --muted: #6f7c89;
-  --line: #1d242c;
-  --accent: #6ef0d8;
+  --background: #0d0a1a;
+  --panel: #16112b;
+  --foreground: #ece9f7;
+  --muted: #8b82a6;
+  --line: #271f3d;
+  --accent: #2dd4bf;
+  --accent-2: #a855f7;
 }
 
 @theme inline {
@@ -16,6 +17,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
   --font-display: var(--font-display);
   --font-sans: var(--font-sans);
   --font-mono: var(--font-mono);
@@ -58,6 +60,14 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #303a45;
+}
+
+/* 青綠 → 紫的漸層文字，呼應原畫色系 */
+.text-gradient {
+  background-image: linear-gradient(105deg, var(--accent) 0%, #67e8f9 40%, var(--accent-2) 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
 }
 
 /* 等寬字標籤：終端機風格的小標題 */

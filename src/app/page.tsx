@@ -15,6 +15,9 @@ export default function Home() {
         {/* HERO */}
         <section className="relative flex min-h-screen flex-col justify-center py-32">
           <div className="bg-dots pointer-events-none absolute inset-0 -z-10" />
+          {/* 呼應原畫的氛圍光暈：青綠 + 紫，非常淡 */}
+          <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[130px]" />
+          <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-accent-2/10 blur-[130px]" />
 
           <FadeIn>
             <p className="eyebrow">機電整合 · 網頁開發 / MECHATRONICS · WEB DEV</p>
@@ -24,7 +27,7 @@ export default function Home() {
             <h1 className="mt-6 font-display text-6xl font-bold uppercase leading-[0.95] tracking-tight sm:text-8xl lg:text-9xl">
               Kenny
               <br />
-              <span className="text-accent">Lin</span>
+              <span className="text-gradient">Lin</span>
             </h1>
           </FadeIn>
 
