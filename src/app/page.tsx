@@ -20,8 +20,8 @@ export default function Home() {
           <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[130px]" />
           <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-accent-2/10 blur-[130px]" />
 
-          {/* 首屏無人機：右側，看向滑鼠、捲動時顆粒化消散（桌機限定，不擋點擊） */}
-          <div className="pointer-events-none absolute right-0 top-1/2 hidden h-[460px] w-[46%] -translate-y-1/2 lg:block">
+          {/* 首屏無人機：右側大範圍 canvas，看向滑鼠、捲動時顆粒向外擴散（桌機限定，不擋點擊） */}
+          <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[64%] lg:block">
             <HeroDrone />
           </div>
 

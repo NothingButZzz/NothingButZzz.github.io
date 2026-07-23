@@ -49,26 +49,40 @@ export default function Drone() {
   const pointer = useRef({ x: 0, y: 0 });
   const scroll = useRef(0);
 
-  // 由表面取樣出粒子的基準位置 + 每顆的飛散方向
-  const { basePositions, directions, count } = useMemo(() => {
-    const N = 2200;
+  // 由表面取樣出粒子的基準位置 + 每顆的飛散方向、速度、剝離時機
+  const { basePositions, directions, speeds, thresholds, phases, count } = useMemo(() => {
+    const N = 4200;
     const mesh = new THREE.Mesh(geometry);
     const sampler = new MeshSurfaceSampler(mesh).build();
     const base = new Float32Array(N * 3);
     const dir = new Float32Array(N * 3);
+    const spd = new Float32Array(N);
+    const thr = new Float32Array(N);
+    const pha = new Float32Array(N);
     const temp = new THREE.Vector3();
     for (let i = 0; i < N; i++) {
       sampler.sample(temp);
       base[i * 3] = temp.x;
       base[i * 3 + 1] = temp.y;
       base[i * 3 + 2] = temp.z;
-      // 向外 + 向上飄散
+      // 方向：表面向外 + 強烈隨機（四面八方擴散），整體略微向上飄
       const out = temp.clone().normalize();
-      dir[i * 3] = out.x + (Math.random() - 0.5) * 0.6;
-      dir[i * 3 + 1] = out.y + 0.6 + Math.random() * 0.8;
-      dir[i * 3 + 2] = out.z + (Math.random() - 0.5) * 0.6;
+      const rand = new THREE.Vector3(
+        Math.random() - 0.5,
+        Math.random() - 0.5,
+        Math.random() - 0.5
+      ).normalize();
+      const mix = out.multiplyScalar(0.45).add(rand.multiplyScalar(0.9)).normalize();
+      dir[i * 3] = mix.x;
+      dir[i * 3 + 1] = mix.y + 0.35; // 稍微向上
+      dir[i * 3 + 2] = mix.z;
+      // 每顆速度不同：有些飛很遠、有些近
+      spd[i] = 0.4 + Math.random() * Math.random() * 2.6;
+      // 剝離時機：外圈/隨機粒子先開始溶解，形成漸進剝離
+      thr[i] = Math.random() * 0.35;
+      pha[i] = Math.random() * Math.PI * 2;
     }
-    return { basePositions: base, directions: dir, count: N };
+    return { basePositions: base, directions: dir, speeds: spd, thresholds: thr, phases: pha, count: N };
   }, [geometry]);
 
   const livePositions = useMemo(() => basePositions.slice(), [basePositions]);
@@ -105,8 +119,8 @@ export default function Drone() {
     // 螺旋槳旋轉
     if (rotorsRef.current) rotorsRef.current.children.forEach((r) => (r.rotation.y += delta * 40));
 
-    // 實體隨捲動淡出
-    const solidOpacity = THREE.MathUtils.clamp(1 - d * 1.6, 0, 1);
+    // 實體隨捲動淡出（比粒子早消失，讓粒子接手）
+    const solidOpacity = THREE.MathUtils.clamp(1 - d * 2.4, 0, 1);
     solidRef.current?.traverse((o) => {
       const mesh = o as THREE.Mesh;
       if (mesh.material) {
@@ -116,22 +130,34 @@ export default function Drone() {
       }
     });
 
-    // 粒子隨捲動向外飛散
+    // 粒子向外大範圍擴散（漸進剝離 + 紊流飄動）
     if (pointsRef.current) {
-      const spread = d * 3.2;
+      const t = state.clock.elapsedTime;
+      const SPREAD = 9; // 最大擴散距離
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
-        const drift = Math.sin(state.clock.elapsedTime * 2 + i) * 0.04 * d;
-        livePositions[i3] = basePositions[i3] + directions[i3] * spread + drift;
-        livePositions[i3 + 1] = basePositions[i3 + 1] + directions[i3 + 1] * spread;
-        livePositions[i3 + 2] = basePositions[i3 + 2] + directions[i3 + 2] * spread + drift;
+        // 每顆依自己的 threshold 漸進釋放
+        const local = THREE.MathUtils.clamp((d - thresholds[i]) / (1 - thresholds[i]), 0, 1);
+        // easeOut：一開始快速噴出，之後放慢
+        const eased = 1 - Math.pow(1 - local, 2);
+        const dist = eased * SPREAD * speeds[i];
+        // 紊流飄動，越擴散越明顯
+        const wob = local * 0.6;
+        const wx = Math.sin(t * 1.3 + phases[i]) * wob;
+        const wy = Math.cos(t * 1.1 + phases[i]) * wob;
+        const wz = Math.sin(t * 0.9 + phases[i] * 1.7) * wob;
+        livePositions[i3] = basePositions[i3] + directions[i3] * dist + wx;
+        livePositions[i3 + 1] = basePositions[i3 + 1] + directions[i3 + 1] * dist + wy + eased * 0.8;
+        livePositions[i3 + 2] = basePositions[i3 + 2] + directions[i3 + 2] * dist + wz;
       }
       const attr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
       attr.array.set(livePositions);
       attr.needsUpdate = true;
       const mat = pointsRef.current.material as THREE.PointsMaterial;
-      // 靜止時粒子藏在表面，捲動時浮現再淡出
-      mat.opacity = THREE.MathUtils.clamp(d < 0.85 ? d * 3 : (1 - d) * 5.6, 0, 1);
+      // 快速浮現、擴散途中維持可見、最後才淡出
+      const appear = THREE.MathUtils.clamp(d * 6, 0, 1);
+      const fade = 1 - THREE.MathUtils.clamp((d - 0.85) / 0.15, 0, 1);
+      mat.opacity = appear * fade;
     }
   });
 
@@ -181,8 +207,8 @@ export default function Drone() {
             <bufferAttribute attach="attributes-position" args={[livePositions, 3]} />
           </bufferGeometry>
           <pointsMaterial
-            color="#2dd4bf"
-            size={0.03}
+            color="#5eead4"
+            size={0.025}
             sizeAttenuation
             transparent
             opacity={0}
