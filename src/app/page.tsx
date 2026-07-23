@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import RotatingText from "@/components/RotatingText";
 import FadeIn from "@/components/FadeIn";
+import HeroRobot from "@/components/HeroRobot";
 import About from "@/components/About";
 import Projects from "@/components/Projects";
 import Skills from "@/components/Skills";
@@ -18,6 +19,11 @@ export default function Home() {
           {/* 呼應原畫的氛圍光暈：青綠 + 紫，非常淡 */}
           <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[130px]" />
           <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-accent-2/10 blur-[130px]" />
+
+          {/* 首屏機器人：右側，會看向滑鼠（桌機限定，不擋點擊） */}
+          <div className="pointer-events-none absolute right-0 top-1/2 hidden h-[440px] w-[45%] -translate-y-1/2 lg:block">
+            <HeroRobot />
+          </div>
 
           <FadeIn>
             <p className="eyebrow">機電整合 · 網頁開發 / MECHATRONICS · WEB DEV</p>
