@@ -63,7 +63,7 @@ export default function Navbar() {
           ))}
           <li>
             <a
-              href="/engineering-portfolio/"
+              href="https://nothingbutzzz.github.io/engineering-portfolio/"
               lang="en"
               className="mono rounded border border-line px-2 py-1 text-xs tracking-widest text-muted transition-colors hover:border-accent hover:text-accent"
             >
@@ -96,7 +96,7 @@ export default function Navbar() {
           ))}
           <li>
             <a
-              href="/engineering-portfolio/"
+              href="https://nothingbutzzz.github.io/engineering-portfolio/"
               lang="en"
               className="mono text-xs tracking-widest text-muted hover:text-accent"
             >

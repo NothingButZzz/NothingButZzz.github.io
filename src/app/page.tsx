@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import RotatingText from "@/components/RotatingText";
 import FadeIn from "@/components/FadeIn";
-import HeroDroneMount from "@/components/HeroDroneMount";
+import HeroSceneMount from "@/components/HeroSceneMount";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
@@ -21,9 +21,9 @@ export default function Home() {
           <div className="pointer-events-none absolute -left-20 top-1/4 -z-10 h-[420px] w-[420px] rounded-full bg-accent/10 blur-[130px]" />
           <div className="pointer-events-none absolute right-0 top-1/3 -z-10 h-[380px] w-[380px] rounded-full bg-accent-2/10 blur-[130px]" />
 
-          {/* 首屏無人機：右側大範圍 canvas，看向滑鼠、捲動時顆粒向外擴散（桌機限定，不擋點擊） */}
+          {/* 首屏粒子球體：右側大範圍 canvas，看向滑鼠、捲動時粒子向外飛散（桌機限定，不擋點擊） */}
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[64%] lg:block">
-            <HeroDroneMount />
+            <HeroSceneMount />
           </div>
 
           <FadeIn>
