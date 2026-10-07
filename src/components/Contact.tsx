@@ -53,7 +53,7 @@ export default function Contact() {
 
       <footer className="mt-16 border-t border-line pt-8">
         <p className="mono text-[0.7rem] text-muted">
-          © {new Date().getFullYear()} KENNY LIN — BUILT WITH NEXT.JS &amp; TAILWIND CSS
+          © {new Date().getFullYear()} 林榆蓁 KENNY LIN — BUILT WITH NEXT.JS &amp; TAILWIND CSS
         </p>
       </footer>
     </section>

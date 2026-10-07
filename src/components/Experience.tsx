@@ -1,5 +1,6 @@
 import FadeIn from "./FadeIn";
 import SectionHeading from "./SectionHeading";
+import Journey from "./Journey";
 
 type Entry = {
   period: string;
@@ -10,16 +11,18 @@ type Entry = {
 
 const EXPERIENCE: Entry[] = [
   {
-    period: "2026.02 — 至今",
+    period: "2026.02 — 2026.08",
     title: "115 年青年百億海外圓夢基金計畫（海外翱翔組）",
     role: "錄取學員",
-    description: "計畫 GJ-9-1「智造機動力」，前往荷蘭飛利浦公司及恩荷芬理工大學見習。",
+    description:
+      "計畫 GJ-9-1「智造機動力」。出發前於南港高工研習協作機器人與機器視覺，之後在荷蘭走訪飛利浦博物館、High Tech Campus、Strijp-S、台夫特理工大學、恩荷芬理工大學與阿姆斯特丹大學。",
   },
   {
     period: "2025.12 — 至今",
     title: "TASA 2026 台灣盃火箭競賽（國家太空中心）",
     role: "酬載組長",
-    description: "進入決賽。負責 IMU 姿態估測、LoRa 遙測系統建置與自動化降落傘回收機制設計。",
+    description:
+      "進入決賽。酬載系統包含 IMU 姿態估測、LoRa 遙測與自動化降落傘回收；我主要負責電路板，把市售的感測與通訊模組整合成模組化 PCB，負責線路設計。",
   },
   {
     period: "2024.08",
@@ -72,6 +75,8 @@ export default function Experience() {
           </FadeIn>
         ))}
       </div>
+
+      <Journey />
 
       <FadeIn delay={0.1}>
         <p className="eyebrow mt-14">Awards</p>

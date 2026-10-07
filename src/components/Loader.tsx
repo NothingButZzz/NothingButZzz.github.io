@@ -11,7 +11,7 @@ export default function Loader() {
   useEffect(() => {
     let raf = 0;
     const start = performance.now();
-    const duration = 2200;
+    const duration = 900;
 
     const tick = (now: number) => {
       const t = Math.min((now - start) / duration, 1);
@@ -19,7 +19,7 @@ export default function Loader() {
       const eased = 1 - Math.pow(1 - t, 2);
       setCount(Math.round(eased * 100));
       if (t < 1) raf = requestAnimationFrame(tick);
-      else setTimeout(() => setDone(true), 350);
+      else setTimeout(() => setDone(true), 150);
     };
     raf = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(raf);
@@ -59,7 +59,7 @@ export default function Loader() {
           </div>
 
           <p className="mono mt-4 text-[0.65rem] tracking-widest text-muted">
-            KENNY // DEV — MMXXVI
+            林榆蓁 {"//"} KENNY LIN
           </p>
         </motion.div>
       )}

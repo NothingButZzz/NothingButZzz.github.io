@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 import RotatingText from "@/components/RotatingText";
 import FadeIn from "@/components/FadeIn";
-import HeroDrone from "@/components/HeroDrone";
+import HeroDroneMount from "@/components/HeroDroneMount";
 import About from "@/components/About";
 import Experience from "@/components/Experience";
 import Projects from "@/components/Projects";
@@ -23,11 +23,11 @@ export default function Home() {
 
           {/* 首屏無人機：右側大範圍 canvas，看向滑鼠、捲動時顆粒向外擴散（桌機限定，不擋點擊） */}
           <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[64%] lg:block">
-            <HeroDrone />
+            <HeroDroneMount />
           </div>
 
           <FadeIn>
-            <p className="eyebrow">機電整合 · 網頁開發 / MECHATRONICS · WEB DEV</p>
+            <p className="eyebrow">智慧自動化 · 機電整合 / AUTOMATION · MECHATRONICS</p>
           </FadeIn>
 
           <FadeIn delay={0.08}>
@@ -36,12 +36,13 @@ export default function Home() {
               <br />
               <span className="text-gradient">Lin</span>
             </h1>
+            <p className="mono mt-5 text-sm tracking-widest text-muted">林榆蓁 · YU-JEN LIN</p>
           </FadeIn>
 
           <FadeIn delay={0.16}>
             <p className="mt-8 max-w-xl leading-relaxed text-muted">
-              喜歡把工程邏輯和軟體結合，從機電整合、嵌入式到網頁開發，
-              做出實際會動、有質感的系統。
+              北科大五專部智慧自動化工程科學生。從競賽機器人、火箭酬載電路板到影像處理，
+              喜歡做出實際會動、在真實世界運作的系統。
             </p>
           </FadeIn>
 
@@ -49,7 +50,7 @@ export default function Home() {
             <div className="mt-8 flex items-center gap-2 text-sm">
               <span className="mono text-muted">{">"}</span>
               <RotatingText
-                words={["mechatronics_engineer", "web_developer", "embedded_systems", "creative_coder"]}
+                words={["intelligent_automation", "mechatronics", "pcb_hardware", "computer_vision"]}
               />
             </div>
           </FadeIn>

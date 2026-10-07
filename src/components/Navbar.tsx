@@ -45,7 +45,7 @@ export default function Navbar() {
     >
       <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <a href="#" className="mono text-sm font-medium tracking-wide">
-          KENNY <span className="text-muted">//</span> DEV
+          KENNY <span className="text-muted">{"//"}</span> LIN
         </a>
 
         <ul className="hidden items-center gap-7 md:flex">
@@ -61,7 +61,15 @@ export default function Navbar() {
               </a>
             </li>
           ))}
-          <li className="mono text-xs text-accent">{">_"}</li>
+          <li>
+            <a
+              href="/engineering-portfolio/"
+              lang="en"
+              className="mono rounded border border-line px-2 py-1 text-xs tracking-widest text-muted transition-colors hover:border-accent hover:text-accent"
+            >
+              EN
+            </a>
+          </li>
         </ul>
 
         <button
@@ -86,6 +94,15 @@ export default function Navbar() {
               </a>
             </li>
           ))}
+          <li>
+            <a
+              href="/engineering-portfolio/"
+              lang="en"
+              className="mono text-xs tracking-widest text-muted hover:text-accent"
+            >
+              ENGLISH PORTFOLIO →
+            </a>
+          </li>
         </ul>
       )}
     </header>

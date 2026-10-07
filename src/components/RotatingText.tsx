@@ -15,8 +15,10 @@ export default function RotatingText({ words }: { words: string[] }) {
     if (!deleting && text === current) {
       timeout = setTimeout(() => setDeleting(true), 1600);
     } else if (deleting && text === "") {
-      setDeleting(false);
-      setWordIndex((i) => (i + 1) % words.length);
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setWordIndex((i) => (i + 1) % words.length);
+      }, 250);
     } else {
       timeout = setTimeout(
         () => {

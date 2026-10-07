@@ -4,7 +4,6 @@ import SectionHeading from "./SectionHeading";
 const CURRENTLY = [
   "國立臺北科技大學 五專部 智慧自動化工程科",
   "TASA 2026 台灣盃火箭競賽 酬載組長（決賽）",
-  "青年百億海外圓夢基金 — 荷蘭飛利浦、恩荷芬理工大學見習",
 ];
 
 const FOCUS = ["機電整合 / Mechatronics", "嵌入式系統 / Embedded", "影像處理 / Computer Vision"];
@@ -22,9 +21,10 @@ export default function About() {
             從機電控制、嵌入式韌體，到影像處理與網頁前端，享受讓系統在真實世界運作的過程。
           </p>
           <p>
-            參與過 TDK 盃、CR 盃機器人競賽與 TASA 台灣盃火箭競賽，負責程式撰寫、電路整合、
-            IMU 姿態估測與 LoRa 遙測；也取得 CSWP、丙級氣壓技術士與初級火箭發射執照。
-            英文方面有多益 785 分，能以英文進行跨國專題合作與成果簡報。
+            參與過 TDK 盃、CR 盃機器人競賽與 TASA 台灣盃火箭競賽，負責程式撰寫、電路整合與
+            火箭酬載的模組化電路板；也取得 CSWP、丙級氣壓技術士與初級火箭發射執照。
+            2026 年夏天獲青年百億海外圓夢基金赴荷蘭見習，走訪飛利浦、High Tech Campus
+            與恩荷芬理工大學。英文方面有多益 785 分，能以英文進行跨國專題合作與成果簡報。
           </p>
         </FadeIn>
 

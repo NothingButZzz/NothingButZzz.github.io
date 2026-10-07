@@ -10,10 +10,10 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
-    title: "TASA 台灣盃火箭酬載系統",
+    title: "TASA 台灣盃火箭酬載電路板",
     description:
-      "擔任酬載組長，建置雙節點航電：感測節點以 IMU 進行姿態估測，LoRa 節點即時回傳遙測資料，並設計自動化降落傘回收機制。團隊進入 2026 台灣盃火箭競賽決賽。",
-    stack: ["Arduino", "C++", "IMU", "LoRa"],
+      "擔任酬載組長。酬載包含 IMU 姿態估測、LoRa 遙測與自動化降落傘回收；我主要負責把市售的感測與通訊模組整合成模組化 PCB，完成線路設計。團隊進入 2026 台灣盃火箭競賽決賽。",
+    stack: ["PCB 線路設計", "模組化整合", "IMU", "LoRa"],
   },
   {
     title: "TDK 盃競賽機器人",

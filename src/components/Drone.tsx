@@ -10,6 +10,17 @@ import * as BufferGeometryUtils from "three/examples/jsm/utils/BufferGeometryUti
 const ARM_ANGLES = [Math.PI / 4, (3 * Math.PI) / 4, (5 * Math.PI) / 4, (7 * Math.PI) / 4];
 const MOTOR_R = 1.25;
 
+/* 固定種子的亂數（mulberry32）：粒子分布每次 render 都一樣，保持 render 純粹 */
+function seededRandom(seed: number) {
+  let a = seed;
+  return () => {
+    a = (a + 0x6d2b79f5) | 0;
+    let t = Math.imul(a ^ (a >>> 15), 1 | a);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
 /* 合併出無人機的實體幾何（機身 + 四臂 + 馬達） */
 function useDroneGeometry() {
   return useMemo(() => {
@@ -52,6 +63,7 @@ export default function Drone() {
   // 由表面取樣出粒子的基準位置 + 每顆的飛散方向、速度、剝離時機
   const { basePositions, directions, speeds, thresholds, phases, count } = useMemo(() => {
     const N = 4200;
+    const random = seededRandom(20260920);
     const mesh = new THREE.Mesh(geometry);
     const sampler = new MeshSurfaceSampler(mesh).build();
     const base = new Float32Array(N * 3);
@@ -68,19 +80,19 @@ export default function Drone() {
       // 方向：表面向外 + 強烈隨機（四面八方擴散），整體略微向上飄
       const out = temp.clone().normalize();
       const rand = new THREE.Vector3(
-        Math.random() - 0.5,
-        Math.random() - 0.5,
-        Math.random() - 0.5
+        random() - 0.5,
+        random() - 0.5,
+        random() - 0.5
       ).normalize();
       const mix = out.multiplyScalar(0.45).add(rand.multiplyScalar(0.9)).normalize();
       dir[i * 3] = mix.x;
       dir[i * 3 + 1] = mix.y + 0.35; // 稍微向上
       dir[i * 3 + 2] = mix.z;
       // 每顆速度不同：有些飛很遠、有些近
-      spd[i] = 0.4 + Math.random() * Math.random() * 2.6;
+      spd[i] = 0.4 + random() * random() * 2.6;
       // 剝離時機：外圈/隨機粒子先開始溶解，形成漸進剝離
-      thr[i] = Math.random() * 0.35;
-      pha[i] = Math.random() * Math.PI * 2;
+      thr[i] = random() * 0.35;
+      pha[i] = random() * Math.PI * 2;
     }
     return { basePositions: base, directions: dir, speeds: spd, thresholds: thr, phases: pha, count: N };
   }, [geometry]);
@@ -133,6 +145,8 @@ export default function Drone() {
     // 粒子向外大範圍擴散（漸進剝離 + 紊流飄動）
     if (pointsRef.current) {
       const t = state.clock.elapsedTime;
+      const attr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
+      const live = attr.array as Float32Array;
       const SPREAD = 9; // 最大擴散距離
       for (let i = 0; i < count; i++) {
         const i3 = i * 3;
@@ -146,12 +160,10 @@ export default function Drone() {
         const wx = Math.sin(t * 1.3 + phases[i]) * wob;
         const wy = Math.cos(t * 1.1 + phases[i]) * wob;
         const wz = Math.sin(t * 0.9 + phases[i] * 1.7) * wob;
-        livePositions[i3] = basePositions[i3] + directions[i3] * dist + wx;
-        livePositions[i3 + 1] = basePositions[i3 + 1] + directions[i3 + 1] * dist + wy + eased * 0.8;
-        livePositions[i3 + 2] = basePositions[i3 + 2] + directions[i3 + 2] * dist + wz;
+        live[i3] = basePositions[i3] + directions[i3] * dist + wx;
+        live[i3 + 1] = basePositions[i3 + 1] + directions[i3 + 1] * dist + wy + eased * 0.8;
+        live[i3 + 2] = basePositions[i3 + 2] + directions[i3 + 2] * dist + wz;
       }
-      const attr = pointsRef.current.geometry.attributes.position as THREE.BufferAttribute;
-      attr.array.set(livePositions);
       attr.needsUpdate = true;
       const mat = pointsRef.current.material as THREE.PointsMaterial;
       // 快速浮現、擴散途中維持可見、最後才淡出
