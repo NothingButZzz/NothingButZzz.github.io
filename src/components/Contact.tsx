@@ -12,7 +12,7 @@ const CHANNELS = [
 export default function Contact() {
   return (
     <section id="contact" className="py-24">
-      <SectionHeading index="04" title="Contact" />
+      <SectionHeading index="05" title="Contact" />
 
       <FadeIn delay={0.1}>
         <p className="mt-10 max-w-xl text-lg leading-relaxed text-foreground/90">

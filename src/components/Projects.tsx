@@ -10,32 +10,40 @@ type Project = {
 
 const PROJECTS: Project[] = [
   {
-    title: "專案一：放你的作品名稱",
+    title: "TASA 台灣盃火箭酬載系統",
     description:
-      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    stack: ["Next.js", "TypeScript"],
-    link: "#",
+      "擔任酬載組長，建置雙節點航電：感測節點以 IMU 進行姿態估測，LoRa 節點即時回傳遙測資料，並設計自動化降落傘回收機制。團隊進入 2026 台灣盃火箭競賽決賽。",
+    stack: ["Arduino", "C++", "IMU", "LoRa"],
   },
   {
-    title: "專案二：放你的作品名稱",
+    title: "TDK 盃競賽機器人",
     description:
-      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    stack: ["Arduino", "C++"],
-    link: "#",
+      "負責程式撰寫與電路整合，解析遙控訊號並設計即時控制邏輯，獲第 29 屆 TDK 盃創思設計與製作競賽入選獎。",
+    stack: ["Embedded C", "電路整合", "馬達控制"],
   },
   {
-    title: "專案三：放你的作品名稱",
+    title: "黑板筆記影像優化與內容提取",
     description:
-      "簡短描述這個專案解決了什麼問題、用了什麼技術，之後可以換成你的真實作品。",
-    stack: ["Python", "Machine Learning"],
-    link: "#",
+      "利用 OpenCV 進行影像前處理與邊緣偵測，提升黑板筆記照片的可讀性與文字辨識率。",
+    stack: ["Python", "OpenCV"],
+  },
+  {
+    title: "差動輪行動機器人運動控制模擬",
+    description:
+      "建構差動輪機器人的數學模型，以 PID 控制器調整路徑追蹤的精準度與行進穩定性。",
+    stack: ["Matlab", "Simulink", "PID"],
+  },
+  {
+    title: "CNC 銑床加工實作",
+    description: "從工件設計、G-code 編寫到實際上機加工，完成整套 CNC 銑削流程。",
+    stack: ["CNC", "G-code"],
   },
 ];
 
 export default function Projects() {
   return (
     <section id="projects" className="py-24">
-      <SectionHeading index="02" title="Projects" />
+      <SectionHeading index="03" title="Projects" />
 
       <div className="mt-4">
         {PROJECTS.map((project, i) => (
