@@ -8,6 +8,8 @@ const SKILLS = [
   "OpenCV",
   "Matlab / Simulink",
   "SolidWorks",
+  "Mastercam",
+  "3D 列印",
   "AutoCAD",
   "CNC 銑床 / G-code",
   "LoRa / IMU",
