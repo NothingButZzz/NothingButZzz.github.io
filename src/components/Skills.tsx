@@ -1,21 +1,10 @@
 import FadeIn from "./FadeIn";
 import SectionHeading from "./SectionHeading";
 
-const SKILLS = [
-  "C / C++",
-  "Python",
-  "Arduino",
-  "OpenCV",
-  "Matlab / Simulink",
-  "SolidWorks",
-  "Mastercam",
-  "3D 列印",
-  "AutoCAD",
-  "CNC 銑床 / G-code",
-  "LoRa / IMU",
-  "TypeScript",
-  "React / Next.js",
-  "機電整合",
+const SKILL_GROUPS = [
+  { title: "機構設計與製造", en: "DESIGN & BUILD", skills: ["SolidWorks", "AutoCAD", "Mastercam", "CNC 銑床 / G-code", "3D 列印"], evidence: "TDK 競賽機器人 · CNC 加工實作" },
+  { title: "嵌入式與系統整合", en: "INTEGRATE & CONTROL", skills: ["C / C++", "Arduino", "LoRa / IMU", "Matlab / Simulink", "機電整合"], evidence: "火箭酬載電路 · 差動輪控制模擬" },
+  { title: "影像與軟體開發", en: "PROCESS & DEVELOP", skills: ["Python", "OpenCV", "TypeScript", "React / Next.js"], evidence: "黑板筆記影像處理 · 個人網站" },
 ];
 
 const CERTS = [
@@ -34,14 +23,14 @@ export default function Skills() {
       <SectionHeading index="04" title="Skills" />
 
       <FadeIn delay={0.1}>
-        <div className="mt-10 flex flex-wrap gap-3">
-          {SKILLS.map((skill) => (
-            <span
-              key={skill}
-              className="mono rounded-md border border-line bg-panel px-4 py-2 text-sm text-foreground/90 transition-colors hover:border-accent hover:text-accent"
-            >
-              {skill}
-            </span>
+        <div className="mt-10 grid gap-4 md:grid-cols-3">
+          {SKILL_GROUPS.map((group) => (
+            <div key={group.title} className="rounded-xl border border-line bg-panel/50 p-6">
+              <p className="eyebrow">{group.en}</p>
+              <h3 className="mt-3 text-lg font-semibold">{group.title}</h3>
+              <ul className="tech-tags">{group.skills.map((skill) => <li key={skill}>{skill}</li>)}</ul>
+              <p className="mt-5 border-t border-line pt-4 text-xs leading-6 text-muted">{group.evidence}</p>
+            </div>
           ))}
         </div>
       </FadeIn>

@@ -63,7 +63,7 @@ const AWARDS = [
 export default function Experience() {
   return (
     <section id="experience" className="py-24">
-      <SectionHeading index="02" title="Experience" />
+      <SectionHeading index="03" title="Experience" />
 
       <div className="mt-4">
         {EXPERIENCE.map((item, i) => (

@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono } from "next/font/google";
 import ScrollProgress from "@/components/ScrollProgress";
-import CustomCursor from "@/components/CustomCursor";
-import Loader from "@/components/Loader";
 import "./globals.css";
 
 const display = Space_Grotesk({
@@ -49,9 +47,8 @@ export default function RootLayout({
       className={`${display.variable} ${sans.variable} ${mono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Loader />
+        <a href="#main-content" className="skip-link">跳至主要內容</a>
         <ScrollProgress />
-        <CustomCursor />
         {children}
       </body>
     </html>

@@ -1,110 +1,57 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const LINKS = [
-  { href: "#about", label: "ABOUT" },
-  { href: "#experience", label: "EXPERIENCE" },
-  { href: "#projects", label: "PROJECTS" },
-  { href: "#skills", label: "SKILLS" },
-  { href: "#contact", label: "CONTACT" },
+  { href: "#projects", label: "作品", en: "WORK" },
+  { href: "#about", label: "關於", en: "ABOUT" },
+  { href: "#experience", label: "經歷", en: "EXPERIENCE" },
+  { href: "#skills", label: "技能", en: "SKILLS" },
+  { href: "#contact", label: "聯絡", en: "CONTACT" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [active, setActive] = useState("");
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 8);
+      const sections = LINKS.map((link) => document.querySelector(link.href)).filter((node): node is Element => !!node);
+      const current = sections.filter((section) => section.getBoundingClientRect().top <= 180).at(-1);
+      setActive(current ? "#" + current.id : "");
+    };
+    const onScroll = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const closeOnDesktop = () => { if (window.innerWidth >= 768) setOpen(false); onScroll(); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", closeOnDesktop);
+    return () => { cancelAnimationFrame(frame); window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", closeOnDesktop); };
   }, []);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(`#${entry.target.id}`);
-        }
-      },
-      { rootMargin: "-45% 0px -50% 0px" }
-    );
-    for (const link of LINKS) {
-      const el = document.querySelector(link.href);
-      if (el) observer.observe(el);
-    }
-    return () => observer.disconnect();
-  }, []);
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") { setOpen(false); menuButton.current?.focus(); }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <header
-      className={`fixed top-0 z-50 w-full transition-colors duration-300 ${
-        scrolled ? "border-b border-line bg-background/85 backdrop-blur-md" : "border-b border-transparent"
-      }`}
-    >
-      <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-        <a href="#" className="mono text-sm font-medium tracking-wide">
-          KENNY <span className="text-muted">{"//"}</span> LIN
-        </a>
-
-        <ul className="hidden items-center gap-7 md:flex">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                className={`mono text-xs tracking-widest transition-colors hover:text-accent ${
-                  active === link.href ? "text-accent" : "text-muted"
-                }`}
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href="https://nothingbutzzz.github.io/engineering-portfolio/"
-              lang="en"
-              className="mono rounded border border-line px-2 py-1 text-xs tracking-widest text-muted transition-colors hover:border-accent hover:text-accent"
-            >
-              EN
-            </a>
-          </li>
-        </ul>
-
-        <button
-          onClick={() => setOpen((o) => !o)}
-          className="mono text-accent md:hidden"
-          aria-label="Toggle menu"
-        >
-          {open ? "[ x ]" : "[ = ]"}
-        </button>
+    <header className={"site-header " + (scrolled || open ? "is-scrolled" : "")}>
+      <nav className="site-container nav-inner" aria-label="主要導覽">
+        <a href="#home" className="site-logo" onClick={() => setOpen(false)}>K<span className="text-accent">.</span><span className="mono">KENNY LIN</span></a>
+        <ul className="desktop-nav">{LINKS.map((link) => <li key={link.href}><a href={link.href} aria-current={active === link.href ? "location" : undefined}><span>{link.label}</span><span className="mono">{link.en}</span></a></li>)}</ul>
+        <div className="nav-actions"><a href={process.env.NODE_ENV === "development" ? "http://localhost:3001/" : "https://nothingbutzzz.github.io/engineering-portfolio/"} lang="en" className="language-link" aria-label="English portfolio">EN <span aria-hidden="true">↗</span></a><button ref={menuButton} type="button" className="menu-toggle" onClick={() => setOpen(!open)} aria-expanded={open} aria-controls="mobile-navigation" aria-label={open ? "關閉選單" : "開啟選單"}>{open ? "關閉 ×" : "選單 ☰"}</button></div>
       </nav>
-
-      {open && (
-        <ul className="flex flex-col gap-3 border-t border-line bg-background/95 px-6 py-4 md:hidden">
-          {LINKS.map((link) => (
-            <li key={link.href}>
-              <a
-                href={link.href}
-                onClick={() => setOpen(false)}
-                className="mono text-xs tracking-widest text-muted hover:text-accent"
-              >
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href="https://nothingbutzzz.github.io/engineering-portfolio/"
-              lang="en"
-              className="mono text-xs tracking-widest text-muted hover:text-accent"
-            >
-              ENGLISH PORTFOLIO →
-            </a>
-          </li>
-        </ul>
-      )}
+      <nav id="mobile-navigation" className="mobile-nav" aria-label="手機導覽" hidden={!open}>
+        {LINKS.map((link) => <a key={link.href} href={link.href} aria-current={active === link.href ? "location" : undefined} onClick={() => setOpen(false)}><span>{link.label}</span><span className="mono">{link.en} ↗</span></a>)}
+      </nav>
     </header>
   );
 }

@@ -1,26 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CopyEmail({ email }: { email: string }) {
-  const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState<"idle" | "copied" | "error">("idle");
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  const copy = async () => {
+  async function copy() {
+    if (timer.current) clearTimeout(timer.current);
     try {
       await navigator.clipboard.writeText(email);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1800);
-    } catch {
-      /* clipboard 不可用時忽略 */
-    }
-  };
+      setStatus("copied");
+      timer.current = setTimeout(() => setStatus("idle"), 2500);
+    } catch { setStatus("error"); }
+  }
 
   return (
-    <button
-      onClick={copy}
-      className="mono rounded-md border border-line px-4 py-2 text-xs uppercase tracking-widest text-muted transition-colors hover:border-accent hover:text-accent"
-    >
-      {copied ? "COPIED ✓" : "COPY EMAIL ⧉"}
-    </button>
+    <div>
+      <button type="button" onClick={copy} className="button-secondary mono text-xs">
+        {status === "copied" ? "已複製 ✓" : "複製 Email ⧉"}
+      </button>
+      <p role="status" className={status === "error" ? "mt-2 text-xs text-muted" : "sr-only"}>
+        {status === "error" ? "無法自動複製，請選取下方 Email 地址複製。" : status === "copied" ? "Email 地址已複製。" : ""}
+      </p>
+    </div>
   );
 }

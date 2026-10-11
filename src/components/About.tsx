@@ -11,7 +11,7 @@ const FOCUS = ["機電整合 / Mechatronics", "嵌入式系統 / Embedded", "影
 export default function About() {
   return (
     <section id="about" className="py-24">
-      <SectionHeading index="01" title="About" />
+      <SectionHeading index="02" title="About" />
 
       <div className="mt-10 grid gap-12 lg:grid-cols-[1.5fr_1fr]">
         <FadeIn delay={0.1} className="space-y-4 leading-relaxed text-muted">

@@ -15,16 +15,16 @@ export default function Contact() {
       <SectionHeading index="05" title="Contact" />
 
       <FadeIn delay={0.1}>
-        <p className="mt-10 max-w-xl text-lg leading-relaxed text-foreground/90">
-          想聊機電整合、嵌入式系統，或合作專案嗎？
-        </p>
+        <p className="eyebrow mt-10">LET’S BUILD SOMETHING REAL.</p>
+        <h3 className="mt-4 text-3xl font-semibold leading-relaxed sm:text-5xl">讓下一個想法，<br /><span className="text-accent">一起成真。</span></h3>
+        <p className="mt-5 max-w-xl text-sm leading-8 text-muted">歡迎交流機電整合、嵌入式系統，或聊聊專題合作、研究與實習機會。</p>
       </FadeIn>
 
       <FadeIn delay={0.18}>
         <div className="mt-6 flex flex-wrap items-center gap-4">
           <a
             href={`mailto:${EMAIL}`}
-            className="mono rounded-md bg-accent px-6 py-3 text-xs font-semibold uppercase tracking-widest text-background transition-opacity hover:opacity-85"
+            className="button-primary"
           >
             Email me →
           </a>
